@@ -15,11 +15,11 @@ Given the following code and input folder structure, here is the output structur
 
 ```js
 Metalsmith(__dirname)
-	.use(i18next(
+	.use(i18next({
 		pattern: '**/*.hamlc',
 		locales: ['en','fr'],
 		namespaces: ['public']
-	))
+	}))
 	.build(function(err, files){
 		if (err) console.error(err.stack)
 	})
@@ -27,12 +27,12 @@ Metalsmith(__dirname)
 Also handlebars is supported as engine:
 
 Metalsmith(__dirname)
-	.use(i18next(
+	.use(i18next({
 		pattern: '**/*.hbs',
 		locales: ['en','fr'],
 		namespaces: ['public'],
 		engine: 'handlebars'
-	))
+	}))
 	.build(function(err, files){
 		if (err) console.error(err.stack)
 	})
