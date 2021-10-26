@@ -139,6 +139,19 @@ describe('metalsmith-i18next', function(){
 		done()
 	})
 
+	it('should localize the path as expected #2', function(done){
+
+		var path   = prop('/:file'),
+			locale = prop('en'),
+			tpath  = helpers(i18next, {path, locale}).tpath
+
+		tpath('/').should.equal('/')
+		tpath('/index.html').should.equal('/index.html')
+		tpath('/index.html','fr').should.equal('/index.html')
+
+		done()
+	})
+
 	it('should translate as expected', function(done){
 
 		var path      = prop(':locale/:file'),
@@ -190,6 +203,26 @@ describe('metalsmith-i18next', function(){
 			frFile.i18nResStore.should.eql({fr: {translations: {common:{foo:'Fou!!!'}, home: {hello: 'Bonjour __name__'}},foo:{foo:{bar:'Foobar!!'}}}})
 		}
 	))
+
+	it('should handle :file', function(done) {
+		Metalsmith('./examples')
+		.use(i18nextMS({		
+			pattern: '**/*.hbs',
+			locales: ['en'],
+			nsPath: './examples/locales/__lng__/__ns__.json',
+			path: ':file',
+			namespaces: ['translations']
+		}))
+		.build(function(err, files){
+			if (err) return done(err)
+			try {
+				should.exist(files['index.hbs'])
+				done()
+			} catch(err) {
+				done(err)
+			}
+		})
+	})
 
 	it('should create both index-en.txt and index-fr.txt in the same directory', metalsmithTest(
 		{
