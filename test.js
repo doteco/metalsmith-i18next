@@ -171,6 +171,12 @@ describe('metalsmith-i18next', function(){
 		fn.tt('bar').should.equal('[home,common].bar')
 	})
 
+	it('should pass parameters for handlebars', async () => {
+		i18next.addResource('en', 'translations', 'arrayTest', ['1', '2', '3'])
+		const fn = helpers(i18next, { engine: 'handlebars' })
+		fn.t('translations:arrayTest', { hash: { joinArrays: ' ' } }).should.equal('1 2 3')
+	})
+
 
 	// ------------------------------------------------------------------------
 	// Normal Test Cases
