@@ -16,7 +16,7 @@
   "author": "Eric Methot <em@nuascent.com>",
   "license": "MIT",
   "dependencies": {
-    "debug": "2.2.0",
+    "debug": "4.3.2",
     "i18next": "1.10.6",
     "multimatch": "2.1.0"
   },
@@ -28,12 +28,12 @@
     "url": "http://github.com/macprog-guy/metalsmith-i18next/issues"
   },
   "devDependencies": {
-    "chai": "3.4.1",
+    "chai": "4.3.4",
     "haml-coffee": "1.14.1",
     "metalsmith": "2.1.0",
     "metalsmith-copy": "0.2.1",
     "metalsmith-in-place": "1.3.2",
     "metalsmith-uglify": "1.2.1",
-    "mocha": "2.3.4"
+    "mocha": "9.1.3"
   }
 }
