@@ -59,8 +59,7 @@ describe('metalsmith-i18next', function(){
 	// Helper Test Cases
 	// ------------------------------------------------------------------------
 
-	it('should return the expected file parts', function(done){
-
+	before (async () => {
 		i18next.init({
 			lng: 'en',
 			resGetPath: './examples/locales/__lng__/__ns__.json',
@@ -69,9 +68,10 @@ describe('metalsmith-i18next', function(){
 			getAsync: false,
 			fallbackLng: false
 		})
+	})
 
-		var fileParts = helpers(i18next).fileParts,
-			parts
+	it('should return the expected file parts', async () => {
+		var fileParts = helpers(i18next).fileParts
 
 		fileParts('index.html').should.eql({
 			file:   'index.html',
@@ -116,11 +116,9 @@ describe('metalsmith-i18next', function(){
         	hash:   '#heading',
         	query:  '?filter=cars'
 		})
-
-		done()
 	})
 
-	it('should localize the path as expected', function(done){
+	it('should localize the path as expected', async () => {
 
 		var path   = prop(':locale/:file'),
 			locale = prop('en'),
@@ -136,10 +134,11 @@ describe('metalsmith-i18next', function(){
 		locale('fr')
 		tpath('/foo/bar.php?filter=cars#heading').should.equal('/foo/bar-fr.php?filter=cars#heading')
 
-		done()
+		path(':file')
+		tpath('/index.html').should.equal('/index.html')
 	})
 
-	it('should localize the path as expected #2', function(done){
+	it('should localize the path as expected #2', async () => {
 
 		var path   = prop('/:file'),
 			locale = prop('en'),
@@ -148,11 +147,9 @@ describe('metalsmith-i18next', function(){
 		tpath('/').should.equal('/')
 		tpath('/index.html').should.equal('/index.html')
 		tpath('/index.html','fr').should.equal('/index.html')
-
-		done()
 	})
 
-	it('should translate as expected', function(done){
+	it('should translate as expected', async () => {
 
 		var path      = prop(':locale/:file'),
 			locale    = prop('fr'),
@@ -164,7 +161,6 @@ describe('metalsmith-i18next', function(){
 		fn.tt('hello', {"name": "John Doe"}).should.equal('Bonjour John Doe')
 		fn.tt('foo').should.equal('Fou!!!')
 		fn.tt('bar').should.equal('[home,common].bar')
-		done()
 	})
 
 
