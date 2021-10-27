@@ -17,7 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "debug": "4.3.2",
-    "i18next": "1.10.6",
+    "i18next": "21.3.3",
     "multimatch": "^5.0.0"
   },
   "repository": {

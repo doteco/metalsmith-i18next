@@ -60,14 +60,22 @@ describe('metalsmith-i18next', function(){
 	// ------------------------------------------------------------------------
 
 	before (async () => {
-		i18next.init({
+		await i18next.init({
 			lng: 'en',
-			resGetPath: './examples/locales/__lng__/__ns__.json',
-			ns: {namespaces:['translations'], defaultNs:'translations'},
+			ns: 'translations',
+			defaultNs:'translations',
 			preload: ['en','fr'],
-			getAsync: false,
+			interpolation: {
+				prefix: '__',
+				suffix: '__'
+			},
 			fallbackLng: false
 		})
+
+		const en = require('./examples/locales/en/translations.json')
+		i18next.addResourceBundle('en', 'translations', en, true, true)
+		const fr = require('./examples/locales/fr/translations.json')
+		i18next.addResourceBundle('fr', 'translations', fr, true, true)
 	})
 
 	it('should return the expected file parts', async () => {
@@ -157,7 +165,7 @@ describe('metalsmith-i18next', function(){
 			namespace = prop('translations'),
 			fn        = helpers(i18next, {path, prefix, locale, namespace})
 
-		fn.t('translations:home.hello',{lng:'fr'}).should.equal('Bonjour __name__')
+		fn.t('translations:home.hello',{lng:'fr'}).should.equal('Bonjour ')
 		fn.tt('hello', {"name": "John Doe"}).should.equal('Bonjour John Doe')
 		fn.tt('foo').should.equal('Fou!!!')
 		fn.tt('bar').should.equal('[home,common].bar')
@@ -268,7 +276,6 @@ describe('metalsmith-i18next', function(){
 			frFile.locale.should.equal('fr')
 		}
 	))
-
 
 	it('should allow tpath to override the locale', metalsmithTest(
 		{		
