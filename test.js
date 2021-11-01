@@ -223,10 +223,31 @@ describe('metalsmith-i18next', function(){
 			path: ':file',
 			namespaces: ['translations']
 		}))
-		.build(function(err, files){
+		.build(function(err, files) {
 			if (err) return done(err)
 			try {
 				should.exist(files['index.hbs'])
+				done()
+			} catch(err) {
+				done(err)
+			}
+		})
+	})
+
+	it('should translate frontmatter', function(done) {
+		Metalsmith('./examples')
+		.use(i18nextMS({		
+			pattern: '**/*.hbs',
+			locales: ['en','fr'],
+			nsPath: './examples/locales/__lng__/__ns__.json',
+			frontMatterKeys: ['title']
+		}))
+		.build(function(err, files) {
+			if (err) return done(err)
+			try {
+				should.exist(files['en/index.hbs'])
+				// console.log(files['en/index.hbs'])
+				"Foobar".should.equal(files['en/index.hbs']['title'])
 				done()
 			} catch(err) {
 				done(err)
