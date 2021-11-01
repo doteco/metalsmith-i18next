@@ -240,13 +240,12 @@ describe('metalsmith-i18next', function(){
 			pattern: '**/*.hbs',
 			locales: ['en','fr'],
 			nsPath: './examples/locales/__lng__/__ns__.json',
-			frontMatterKeys: ['title']
+			frontMatterKeys: ['title', 'dummy']
 		}))
 		.build(function(err, files) {
 			if (err) return done(err)
 			try {
 				should.exist(files['en/index.hbs'])
-				// console.log(files['en/index.hbs'])
 				"Foobar".should.equal(files['en/index.hbs']['title'])
 				done()
 			} catch(err) {
