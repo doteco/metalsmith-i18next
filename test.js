@@ -247,6 +247,7 @@ describe('metalsmith-i18next', function(){
 			try {
 				should.exist(files['en/index.hbs'])
 				"Foobar".should.equal(files['en/index.hbs']['title'])
+				"missing key".should.equal(files['en/index.hbs']['dummy'])
 				done()
 			} catch(err) {
 				done(err)
