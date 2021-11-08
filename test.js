@@ -25,7 +25,6 @@ describe('metalsmith-i18next', function(){
 			Metalsmith('./examples')
 			.use(i18nextMS(config))
 			.use(templates({
-				engine: 'haml-coffee',
 				pattern:  '**/*.hamlc'
 			}))
 			.use(copy({
@@ -191,8 +190,8 @@ describe('metalsmith-i18next', function(){
 		},
 		function(files) {
 
-			var enFile = files['en/index.txt'],
-				frFile = files['fr/index.txt']
+			var enFile = files['en/index.html'],
+				frFile = files['fr/index.html']
 
 			should.exist(enFile)
 			should.exist(frFile)
@@ -263,14 +262,13 @@ describe('metalsmith-i18next', function(){
 			nsPath: './examples/locales/__lng__/__ns__.json'
 		}))
 		.use(templates({
-			engine: 'haml-coffee',
 			pattern:  '**/foo.hamlc'
 		}))
 		.build(function(err, files) {
 			if (err) return done(err)
 			try {
-				should.exist(files['en/foo.hamlc'])
-				"Foobar".should.equal(files['en/foo.hamlc'].contents.toString('utf8'))
+				should.exist(files['en/foo.html'])
+				"Foobar".should.equal(files['en/foo.html'].contents.toString('utf8'))
 				done()
 			} catch(err) {
 				done(err)
@@ -288,8 +286,8 @@ describe('metalsmith-i18next', function(){
 		},
 		function(files) {
 
-			var enFile = files['index-en.txt'],
-				frFile = files['index-fr.txt']
+			var enFile = files['index-en.html'],
+				frFile = files['index-fr.html']
 
 			should.exist(enFile)
 			should.exist(frFile)
@@ -309,8 +307,8 @@ describe('metalsmith-i18next', function(){
 		},
 		function(files) {
 
-			var enFile = files['index-en.txt'],
-				frFile = files['index-fr.txt']
+			var enFile = files['index-en.html'],
+				frFile = files['index-fr.html']
 
 			should.exist(enFile)
 			should.exist(frFile)
@@ -336,12 +334,12 @@ describe('metalsmith-i18next', function(){
 		},
 		function(files) {
 
-			var enFile = files['en/index.txt']
+			var enFile = files['en/index.html']
 
 			should.exist(enFile)
 
-			enFile.tpath('/toto.txt').should.equal('/en/toto.txt')
-			enFile.tpath('/toto.txt','fr').should.equal('/fr/toto.txt')
+			enFile.tpath('/toto.html').should.equal('/en/toto.html')
+			enFile.tpath('/toto.html','fr').should.equal('/fr/toto.html')
 		}
 	))
 })
