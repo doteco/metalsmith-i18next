@@ -1,0 +1,4 @@
+---
+i18nNamespace: foo
+---
+= @t('foo:foo.bar')

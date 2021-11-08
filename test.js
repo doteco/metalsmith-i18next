@@ -236,8 +236,8 @@ describe('metalsmith-i18next', function(){
 
 	it('should translate frontmatter', function(done) {
 		Metalsmith('./examples')
-		.use(i18nextMS({		
-			pattern: '**/*.hbs',
+		.use(i18nextMS({
+			pattern: '**/index.hbs',
 			locales: ['en','fr'],
 			nsPath: './examples/locales/__lng__/__ns__.json',
 			frontMatterKeys: ['title', 'dummy']
@@ -248,6 +248,29 @@ describe('metalsmith-i18next', function(){
 				should.exist(files['en/index.hbs'])
 				"Foobar".should.equal(files['en/index.hbs']['title'])
 				"missing key".should.equal(files['en/index.hbs']['dummy'])
+				done()
+			} catch(err) {
+				done(err)
+			}
+		})
+	})
+
+	it('should use i18nNamespace as the default namespace for keys', function(done) {
+		Metalsmith('./examples')
+		.use(i18nextMS({
+			pattern: '**/foo.hamlc',
+			locales: ['en','fr'],
+			nsPath: './examples/locales/__lng__/__ns__.json'
+		}))
+		.use(templates({
+			engine: 'haml-coffee',
+			pattern:  '**/foo.hamlc'
+		}))
+		.build(function(err, files) {
+			if (err) return done(err)
+			try {
+				should.exist(files['en/foo.hamlc'])
+				"Foobar".should.equal(files['en/foo.hamlc'].contents.toString('utf8'))
 				done()
 			} catch(err) {
 				done(err)
