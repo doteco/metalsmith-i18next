@@ -342,4 +342,29 @@ describe('metalsmith-i18next', function(){
 			enFile.tpath('/toto.html','fr').should.equal('/fr/toto.html')
 		}
 	))
+
+	it('should support loading extra resources from files', function (done) {
+		Metalsmith('./examples')
+		.use(i18nextMS({
+			pattern: '**/custom.hbs',
+			locales: ['en','fr'],
+			nsPath: './examples/locales/__lng__/__ns__.json'
+		}))
+		.build(function(err, files) {
+			if (err) return done(err)
+			try {
+				const enFile = files['en/custom.hbs']
+				should.exist(enFile)
+
+				const frFile = files['fr/custom.hbs']
+				should.exist(frFile)
+
+				enFile.t('extra').should.equal('<h1>HI!</h1>')
+				frFile.t('extra').should.equal('<h1>Bonjour!</h1>')
+				done()
+			} catch(err) {
+				done(err)
+			}
+		})
+	})
 })
